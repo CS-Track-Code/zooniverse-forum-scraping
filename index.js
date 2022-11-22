@@ -9,7 +9,7 @@ const url = process.env.DB_URL;
 const db_name = process.env.DBNAME;
 const data_to_crawl = process.env.DATA_TYPE;
 const params = JSON.parse(process.env.PARAMS);
-
+const discussion_size = rocess.env.DISCUSSION_SIZE;
 console.log(`Connecting to database ${db_name} in ${url}...`);
 
 MongoClient.connect(url, function(err, db) {
@@ -27,7 +27,7 @@ MongoClient.connect(url, function(err, db) {
             getDiscussions(dbo, params);
             break;
         case 'comments':
-            getComments(dbo, params);
+            getComments(dbo, params, discussion_size);
             break;
         default:
             break;

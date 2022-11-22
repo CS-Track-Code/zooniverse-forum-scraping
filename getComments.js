@@ -23,10 +23,10 @@ async function getcomments(list, discussionsCollection, commentsCollection, para
     }
 }
 
-export function getComments(dbo, params) {
+export function getComments(dbo, params, discussion_size) {
     var DiscussionsCollection = dbo.collection("Discussions");
     var CommentsCollection = dbo.collection("Comments");
-    DiscussionsCollection.find({"comments_count": 2, "updated": null},{title: 1, project_slug: 1, id: 1}).toArray().then(projects => {
+    DiscussionsCollection.find({"comments_count": {"$gte": discussion_size}, "updated": null},{title: 1, project_slug: 1, id: 1}).toArray().then(projects => {
         console.log(`collection reached... process will start...`);
         getcomments(projects, DiscussionsCollection, CommentsCollection, params).then(()=>{
             console.log("Process finished");
